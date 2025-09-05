@@ -60,7 +60,7 @@ nav span {
     display: flex;
     flex: 1;
     justify-content: center;
-    gap: 5em;
+    gap: 3em;
     font-size: 1.5em;
 }
 .nav-links a {
@@ -84,6 +84,9 @@ nav span {
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        section {
+            margin-bottom: 3em;
         }
         .cta {
             display: inline-block;
@@ -128,22 +131,52 @@ nav span {
                 padding: 6px;
             }
         }
-        .section-transition {
-    animation: sectionFadeIn 0.8s;
+        .blog-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2em;
+    margin: 1em 0;
 }
-@keyframes sectionFadeIn {
-    0% {
-        background-color: #ffe9b3;
-        opacity: 0.2;
-    }
-    60% {
-        background-color: #ffe9b3;
-        opacity: 1;
-    }
-    100% {
-        background-color: transparent;
-        opacity: 1;
-    }
+.blog-item {
+    display: flex;
+    align-items: flex-start;
+    background: #f8f6fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(134,109,125,0.07);
+    padding: 0.7em 1em;
+    transition: box-shadow 0.2s;
+}
+.blog-item:hover {
+    box-shadow: 0 4px 16px rgba(134,109,125,0.15);
+}
+.blog-thumb {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 1em;
+    background: #eee;
+    flex-shrink: 0;
+}
+.blog-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.blog-title {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #866d7d;
+    text-decoration: none;
+    margin-bottom: 0.3em;
+}
+.blog-title:hover {
+    text-decoration: underline;
+}
+.blog-date {
+    font-size: 0.95em;
+    color: #888;
 }
     </style>
 </head>
@@ -156,6 +189,7 @@ nav span {
                 <a href="#présentation">Présentation</a>
                 <a href="#activites">Activités</a>
                 <a href="#cours-tarifs">Cours &amp; Tarifs</a>
+                <a href="#blogs">Blogs</a>
                 <a href="#contact">Contact</a>
             </div>
         </nav>
@@ -167,9 +201,23 @@ nav span {
     <main>
         <section id="présentation">
             <h2>Qui sommes-nous ?</h2>
-            <p>
-                Championnes est l'association officielle de Champigny dédiée à la pratique et à la promotion du jeu d'échecs. Ouvert à tous les âges et tous les niveaux, notre club vise à rassembler les passionnés d'échecs dans une ambiance conviviale et stimulante.
-            </p>
+  <p>
+    <strong>Championnes</strong> est une association dédiée à la promotion et au développement du jeu d’échecs, 
+    avec un objectif particulier : <strong>encourager et augmenter le nombre de joueuses</strong>, de tous âges et de tous niveaux.  
+  </p>
+  <p>
+    Au-delà des compétitions, notre club met l’accent sur la <strong>convivialité</strong>, l’échange et le plaisir de jouer. 
+    Nous croyons que les échecs sont plus qu’un simple jeu : c’est un moyen de partager, d’apprendre et de se dépasser dans une ambiance 
+    stimulante et bienveillante.
+  </p>
+  <p>
+    Nous proposons des <strong>cours adaptés</strong> aux débutants comme aux confirmés, des <strong>tournois amicaux et compétitifs</strong>, 
+    ainsi que des <strong>événements spéciaux</strong> favorisant la rencontre entre passionné(e)s.  
+  </p>
+  <p>
+    Que vous soyez une joueuse curieuse de découvrir les échecs, un parent souhaitant initier ses enfants, ou un(e) compétiteur(trice) en quête de nouveaux défis, 
+    <strong>notre association vous accueille avec plaisir</strong>.
+  </p>
         </section>
         <section id="activites">
             <h2>Nos activités</h2>
@@ -222,6 +270,10 @@ nav span {
                 <li>Intégration dans une équipe FFE (Nationale ou Critérium)</li>
             </ul>
         </section>
+        <section id="blogs">
+            <h2>Blogs</h2>
+            <div id="rss-articles">Chargement des articles...</div>
+        </section>
         <section id="contact">
             <h2>Contactez-nous</h2>
             <p>
@@ -235,20 +287,32 @@ nav span {
         &copy; 2024 Championnes - Club d'Échecs de Champigny
     </footer>
     <script>
-document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
-  link.addEventListener('click', function(e) {
-    const id = this.getAttribute('href');
-    const target = document.querySelector(id);
-    if (target) {
-      setTimeout(() => {
-        target.classList.add('section-transition');
-        setTimeout(() => {
-          target.classList.remove('section-transition');
-        }, 800); // durée de l'animation
-      }, 350); // laisse le scroll natif se faire avant d'animer
+// Utilise l'API rss2json pour contourner la politique CORS des navigateurs
+fetch('https://api.rss2json.com/v1/api.json?rss_url=https://joinville-echecs.fr/feed/')
+  .then(response => response.json())
+  .then(data => {
+    const container = document.getElementById('rss-articles');
+    if (data.items && data.items.length > 0) {
+      container.innerHTML = '<div class="blog-list">' + data.items.slice(0,5).map(item =>
+  `<div class="blog-item">
+      ${item.thumbnail ? `
+        <a href="${item.link}" target="_blank" rel="noopener">
+          <img src="${item.thumbnail}" alt="Illustration" class="blog-thumb">
+        </a>
+      ` : ''}
+      <div class="blog-content">
+        <a href="${item.link}" target="_blank" rel="noopener" class="blog-title">${item.title}</a>
+        <div class="blog-date">${new Date(item.pubDate).toLocaleDateString('fr-FR')}</div>
+      </div>
+  </div>`
+).join('') + '</div>';
+    } else {
+      container.textContent = "Aucun article trouvé.";
     }
+  })
+  .catch(() => {
+    document.getElementById('rss-articles').textContent = "Impossible de charger le flux RSS.";
   });
-});
 </script>
 </body>
 </html>
