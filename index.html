@@ -38,19 +38,26 @@
   }
 }
 @media (max-width: 800px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5em 1em;
+    position: relative; /* Ajouté */
+  }
   .nav-links {
     display: none;
     flex-direction: column;
     gap: 1em;
     font-size: 1.1em;
-    width: 100%;
+    width: 100vw;
     align-items: flex-start;
     margin-top: 0.5em;
     background: #866d7d;
     position: absolute;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     top: 100%;
-    z-index: 1001;
+    z-index: 2000;
     border-radius: 0 0 10px 10px;
     box-shadow: 0 4px 16px rgba(134,109,125,0.15);
     padding: 1em 0.5em;
@@ -61,6 +68,19 @@
   #menu-toggle {
     cursor: pointer;
     user-select: none;
+    z-index: 2001;
+  }
+}
+@media (max-width: 800px) {
+  #nav-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.2);
+    z-index: 1500;
+  }
+  #nav-overlay.open {
+    display: block;
   }
 }
         @font-face {
@@ -375,24 +395,28 @@ fetch('https://api.rss2json.com/v1/api.json?rss_url=https://joinville-echecs.fr/
 <script>
 const menuToggle = document.getElementById('menu-toggle');
 const navLinks = document.getElementById('nav-links');
+const navOverlay = document.getElementById('nav-overlay');
+
+function closeMenu() {
+  navLinks.classList.remove('open');
+  navOverlay.classList.remove('open');
+}
 
 menuToggle.addEventListener('click', () => {
   navLinks.classList.toggle('open');
+  navOverlay.classList.toggle('open');
 });
 
-// Accessibilité clavier (Entrée ou Espace)
 menuToggle.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') {
     navLinks.classList.toggle('open');
+    navOverlay.classList.toggle('open');
   }
 });
 
-// Fermer le menu quand on clique un lien (optionnel)
 navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-  });
+  link.addEventListener('click', closeMenu);
 });
-</script>
+navOverlay.addEventListener('click', closeMenu);
 </body>
 </html>
