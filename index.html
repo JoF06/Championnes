@@ -12,12 +12,28 @@
     padding: 0.5em 1em;
   }
   .nav-links {
+    display: none;
     flex-direction: column;
     gap: 1em;
     font-size: 1.1em;
     width: 100%;
     align-items: flex-start;
     margin-top: 0.5em;
+    background: #866d7d;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    z-index: 1001;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 16px rgba(134,109,125,0.15);
+    padding: 1em 0.5em;
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  #menu-toggle {
+    cursor: pointer;
+    user-select: none;
   }
   .presentation-img {
     margin-top: 5em;
@@ -216,8 +232,8 @@ nav span {
     <header> 
         <div class="nav-container">
         <nav>
-            <span>Championnes</span>
-            <div class="nav-links">
+            <span id="menu-toggle" tabindex="0">Championnes</span>
+            <div class="nav-links" id="nav-links">
                 <a href="#présentation">Présentation</a>
                 <a href="#activites">Activités</a>
                 <a href="#cours-tarifs">Cours &amp; Tarifs</a>
@@ -345,6 +361,28 @@ fetch('https://api.rss2json.com/v1/api.json?rss_url=https://joinville-echecs.fr/
   .catch(() => {
     document.getElementById('rss-articles').textContent = "Impossible de charger le flux RSS.";
   });
+</script>
+<script>
+const menuToggle = document.getElementById('menu-toggle');
+const navLinks = document.getElementById('nav-links');
+
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('open');
+});
+
+// Accessibilité clavier (Entrée ou Espace)
+menuToggle.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    navLinks.classList.toggle('open');
+  }
+});
+
+// Fermer le menu quand on clique un lien (optionnel)
+navLinks.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+  });
+});
 </script>
 </body>
 </html>
