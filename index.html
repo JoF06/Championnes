@@ -343,39 +343,6 @@ fetch('https://api.rss2json.com/v1/api.json?rss_url=https://joinville-echecs.fr/
     document.getElementById('rss-articles').textContent = "Impossible de charger le flux RSS.";
   });
 </script>
-<script>
-const toggle = document.getElementById("menu-toggle");
-const menu = document.getElementById("nav-links");
-
-function isMobile() {
-  return window.innerWidth <= 800;
-}
-
-toggle.addEventListener("click", () => {
-  if (isMobile()) {
-    menu.classList.toggle("show");
-  }
-});
-
-// Accessibilité clavier
-toggle.addEventListener("keydown", (e) => {
-  if ((e.key === "Enter" || e.key === " ") && isMobile()) {
-    menu.classList.toggle("show");
-  }
-});
-
-// Fermer le menu quand on clique un lien (optionnel)
-menu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    if (isMobile()) menu.classList.remove('show');
-  });
-});
-
-// Fermer le menu si on repasse en desktop
-window.addEventListener('resize', () => {
-  if (!isMobile()) menu.classList.remove('show');
-});
-</script>
-
 </body>
 </html>
+
