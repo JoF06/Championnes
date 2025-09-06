@@ -197,8 +197,7 @@ nav span {
 }
 .blog-title {
     font-size: 1.1em;
-    font-weight: bold;
-    color: #866d7d;
+    color: #000000;
     text-decoration: none;
     margin-bottom: 0.3em;
 }
@@ -318,7 +317,6 @@ nav span {
         &copy; 2024 Championnes - Club d'Échecs de Champigny
     </footer>
     <script>
-// Utilise l'API rss2json pour contourner la politique CORS des navigateurs
 fetch('https://api.rss2json.com/v1/api.json?rss_url=https://joinville-echecs.fr/feed/')
   .then(response => response.json())
   .then(data => {
@@ -381,4 +379,3 @@ window.addEventListener('resize', () => {
 
 </body>
 </html>
-
