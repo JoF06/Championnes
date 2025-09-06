@@ -12,6 +12,33 @@
     padding: 0.5em 1em;
   }
   .nav-links {
+    flex-direction: column;
+    gap: 1em;
+    font-size: 1.1em;
+    width: 100%;
+    align-items: flex-start;
+    margin-top: 0.5em;
+  }
+  .presentation-img {
+    margin-top: 5em;
+    width: 100%;
+    max-width: 100%;
+  }
+  main {
+    padding: 1em 0.5em;
+  }
+  .blog-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .blog-thumb {
+    width: 100%;
+    height: auto;
+    margin: 0 0 0.5em 0;
+  }
+}
+@media (max-width: 800px) {
+  .nav-links {
     display: none;
     flex-direction: column;
     gap: 1em;
@@ -34,23 +61,6 @@
   #menu-toggle {
     cursor: pointer;
     user-select: none;
-  }
-  .presentation-img {
-    margin-top: 5em;
-    width: 100%;
-    max-width: 100%;
-  }
-  main {
-    padding: 1em 0.5em;
-  }
-  .blog-item {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .blog-thumb {
-    width: 100%;
-    height: auto;
-    margin: 0 0 0.5em 0;
   }
 }
         @font-face {
@@ -233,7 +243,7 @@ nav span {
         <div class="nav-container">
         <nav>
             <span id="menu-toggle" tabindex="0">Championnes</span>
-            <div class="nav-links" id="nav-links">
+            <div class="nav-links" id="nav-links" >
                 <a href="#présentation">Présentation</a>
                 <a href="#activites">Activités</a>
                 <a href="#cours-tarifs">Cours &amp; Tarifs</a>
@@ -361,28 +371,6 @@ fetch('https://api.rss2json.com/v1/api.json?rss_url=https://joinville-echecs.fr/
   .catch(() => {
     document.getElementById('rss-articles').textContent = "Impossible de charger le flux RSS.";
   });
-</script>
-<script>
-const menuToggle = document.getElementById('menu-toggle');
-const navLinks = document.getElementById('nav-links');
-
-menuToggle.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-});
-
-// Accessibilité clavier (Entrée ou Espace)
-menuToggle.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' || e.key === ' ') {
-    navLinks.classList.toggle('open');
-  }
-});
-
-// Fermer le menu quand on clique un lien (optionnel)
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-  });
-});
 </script>
 </body>
 </html>
