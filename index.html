@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Club d'échecs Championnes : association conviviale qui promeut les échecs féminins, cours, tournois et actualités.">
     <meta name="keywords" content="échecs, club, championnes, tournois, cours d'échecs, échecs féminins">
-
     <title>Championnes - Club d'Échecs de Champigny</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
     <style>
       @media (min-width: 801px) {
   .nav-links {
@@ -17,7 +18,6 @@
     font-size: 1.5em;
   }
 }
-
 @media (max-width: 800px) {
   .nav-links {
     display: none;
@@ -35,6 +35,27 @@
     width: 100%;
   }
 }
+
+
+
+.swiper {
+    border-radius: 0.6em;
+  width: 100%;
+  max-width: 73em;
+  height: 25em;
+  margin: 3.6em  auto 0 auto; 
+  overflow: hidden;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-position: center center;
+  object-fit: cover;
+}
+
+
+
      
         @font-face {
             font-family: "Macondo";
@@ -62,7 +83,7 @@
             padding: 0;
         }
         nav {
-            border-radius: 10px;
+            border-radius: 0.6em;
     background: #866d7d;
     display: flex;
     align-items: center;
@@ -113,7 +134,7 @@ nav span {
             max-width: 70em;
             margin: 0  auto 0 auto; 
             background: #fff;
-            border-radius: 10px;
+            border-radius: 1em;
             box-shadow: 0 2px 8px rgba(0,0,0,0.07);
         }
         section {
@@ -224,9 +245,13 @@ nav span {
             </div>
         </nav>
         </div>
-        <div class="nav-container">
-        <img src="images/1648508.jpeg" alt="joueuse d'échecs" class="presentation-img">
-    </div>
+        <div class="swiper mySwiper">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide"><img src="images/img1.jpg" alt="Image 1"></div>
+    <div class="swiper-slide"><img src="images/img2.jpg" alt="Image 2"></div>
+    <div class="swiper-slide"><img src="images/img3.jpg" alt="Image 3"></div>
+  </div>
+
     </header>
     <main>
         <section id="présentation">
@@ -343,6 +368,27 @@ fetch('https://api.rss2json.com/v1/api.json?rss_url=https://joinville-echecs.fr/
     document.getElementById('rss-articles').textContent = "Impossible de charger le flux RSS.";
   });
 </script>
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+  const swiper = new Swiper(".mySwiper", {
+    loop: true,               // boucle infinie
+    autoplay: {
+      delay: 3000,            // 3 secondes avant chaque changement
+      disableOnInteraction: false,
+    },
+    speed: 1000,              // durée de transition (1s → lent et fluide)
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    effect: "fade",           // ou "slide" si tu préfères le glissement
+});
+</script>
+
 </body>
 </html>
-
