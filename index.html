@@ -25,6 +25,12 @@
       src: url("fonts/Forum-Regular.ttf") format("truetype"),
            url("fonts/Forum-Regular.woff") format("woff");
     }
+    @font-face {
+      font-family: "Roboto Condensed";
+      src: url("fonts/Roboto_Condensed-Regular.ttf") format("truetype"),
+           url("fonts/Roboto_Condensed-Regular.woff") format("woff");
+    }
+
     html {
       scroll-padding-top: 4.3em;
       scroll-behavior: smooth;
@@ -106,6 +112,9 @@
       border-radius: 1em;
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     }
+    main p {
+    font-size: 1em;
+  }
     section {
       margin-bottom: 3em;
     }
@@ -212,7 +221,13 @@
       font-size: 2.2em;
       margin-left: 2em;
     }
-
+  main h2 {
+    font-size: 1.3em;      /* titres un peu plus petits */
+  }
+  main p {
+    font-size: 0.9em;
+    font-family: "Roboto Condensed", sans-serif;        /* texte un peu plus petit */
+  }
   .nav-links {
     display: none;              /* caché par défaut */
     flex-direction: column;     /* liens en colonne */
@@ -229,13 +244,7 @@
   .nav-links.show {
     display: flex; /* affiché au clic */
   }
-  main h2 {
-    font-size: 1.3em;      /* titres un peu plus petits */
-  }
-  main p {
-    font-size: 0.9em;
-    font-family: "Roboto Condensed", sans-serif;  
-  }
+
   .nav-links a {
     font-size: 1em;
     padding: 0.3em 0;
@@ -407,6 +416,3 @@
   </script>
 </body>
 </html>
-
-
-
